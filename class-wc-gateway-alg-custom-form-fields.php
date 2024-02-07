@@ -1,12 +1,4 @@
 <?php
-/**
- * Custom Payment Gateways for WooCommerce - Gateways Form Fields
- *
- * @version 1.6.3
- * @since   1.0.0
- * @author  Imaginate Solutions
- * @package cpgw
- */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
