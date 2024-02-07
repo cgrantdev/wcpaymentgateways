@@ -1,12 +1,4 @@
 <?php
-/**
- * Custom Payment Gateways for WooCommerce - Input Fields Section Settings
- *
- * @version 1.6.1
- * @since   1.4.0
- * @author  Imaginate Solutions
- * @package cpgw
- */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -14,34 +6,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Settings_Input_Fields' ) ) :
 
-	/**
-	 * Input Fields Class.
-	 */
 	class Alg_WC_Custom_Payment_Gateways_Settings_Input_Fields extends Alg_WC_Custom_Payment_Gateways_Settings_Section {
 
 		public $id = '';
 
 		public $desc = '';
 
-		/**
-		 * Constructor.
-		 *
-		 * @version 1.4.0
-		 * @since   1.4.0
-		 */
 		public function __construct() {
 			$this->id   = 'input_fields';
 			$this->desc = __( 'Input Fields', 'custom-payment-gateways-woocommerce' );
 			parent::__construct();
 		}
 
-		/**
-		 * Get settings.
-		 *
-		 * @return array Settings Array.
-		 * @version 1.6.1
-		 * @since   1.4.0
-		 */
 		public function get_settings() {
 			$settings = array(
 				array(
