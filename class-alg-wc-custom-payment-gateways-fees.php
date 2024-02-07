@@ -1,32 +1,10 @@
 <?php
-/**
- * Custom Payment Gateways for WooCommerce - Fees Class
- *
- * @version 1.6.0
- * @since   1.6.0
- * @author  Imaginate Solutions
- * @package cpgw
- */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Fees' ) ) :
-
-	/**
-	 * Fees Class.
-	 */
 	class Alg_WC_Custom_Payment_Gateways_Fees {
-
-		/**
-		 * Constructor.
-		 *
-		 * @version 1.6.0
-		 * @since   1.6.0
-		 * @todo    [feature] discounts
-		 * @todo    [feature] per product, per category, per tag
-		 */
 		public function __construct() {
 			add_action( 'woocommerce_cart_calculate_fees', array( $this, 'calculate_fees' ), PHP_INT_MAX );
 			add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ) );
@@ -48,43 +26,16 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Fees' ) ) :
 			);
 		}
 
-		/**
-		 * Calculate fees.
-		 *
-		 * @param WC_Cart $cart Cart Object.
-		 * @version 1.6.0
-		 * @since   1.6.0
-		 */
 		public function calculate_fees( $cart ) {
 			foreach ( $this->get_fees( $cart ) as $fee ) {
 				$cart->add_fee( $fee['name'], $fee['amount'], $fee['taxable'], $fee['tax_class'] );
 			}
 		}
 
-		/**
-		 * Is equal?
-		 *
-		 * @param   float $float1 First Value.
-		 * @param   float $float2 Second Value.
-		 * @return  bool
-		 * @version 1.6.0
-		 * @since   1.6.0
-		 * @todo    [dev] (maybe) better epsilon value
-		 */
 		public function is_equal( $float1, $float2 ) {
 			$epsilon = ( defined( 'PHP_FLOAT_EPSILON' ) ? PHP_FLOAT_EPSILON : 0.000001 );
 			return ( abs( $float1 - $float2 ) < $epsilon );
 		}
-
-		/**
-		 * Get fees.
-		 *
-		 * @param   WC_Cart $cart Cart Object.
-		 * @return  array
-		 * @version 1.6.0
-		 * @since   1.6.0
-		 * @todo    [dev] (maybe) check if we really will need `$cart_total` before calculating it
-		 */
 		public function get_fees( $cart ) {
 			$fees = array();
 
@@ -126,15 +77,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Fees' ) ) :
 			return $fees;
 		}
 
-		/**
-		 * Get cart total.
-		 *
-		 * @param mixed $cart Cart Object.
-		 * @return int Cart Total.
-		 * @version 1.6.0
-		 * @since   1.6.0
-		 * @todo    [dev] check if we need to also call `calculate_shipping()`
-		 */
 		public function get_cart_total( $cart ) {
 			// Calculate totals.
 			remove_action( 'woocommerce_cart_calculate_fees', array( $this, 'calculate_fees' ), PHP_INT_MAX );
@@ -169,14 +111,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Fees' ) ) :
 			return $cart_total;
 		}
 
-		/**
-		 * Get current gateway.
-		 *
-		 * @version 1.6.0
-		 * @since   1.6.0
-		 * @todo    [dev] (important) simplify
-		 * @todo    [dev] (maybe) add `$this->last_known_current_gateway` fallback
-		 */
 		public function get_current_gateway() {
 			// Get the key.
 			$current_gateway_key = false;
