@@ -1,47 +1,22 @@
 <?php
-/**
- * Custom Payment Gateways for WooCommerce - Fees Section Settings
- *
- * @version 1.6.0
- * @since   1.6.0
- * @author  Imaginate Solutions
- * @package cpgw
- */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Settings_Fees' ) ) :
-
-	/**
-	 * Fees settings class.
-	 */
 	class Alg_WC_Custom_Payment_Gateways_Settings_Fees extends Alg_WC_Custom_Payment_Gateways_Settings_Section {
 
 		public $id = '';
 
 		public $desc = '';
 
-		/**
-		 * Constructor.
-		 *
-		 * @version 1.6.0
-		 * @since   1.6.0
-		 */
 		public function __construct() {
 			$this->id   = 'fees';
 			$this->desc = __( 'Fees', 'custom-payment-gateways-woocommerce' );
 			parent::__construct();
 		}
 
-		/**
-		 * Get settings.
-		 *
-		 * @return array Settings Array.
-		 * @version 1.6.0
-		 * @since   1.6.0
-		 */
 		public function get_settings() {
 			$settings = array(
 				array(
