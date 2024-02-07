@@ -1,12 +1,4 @@
 <?php
-/**
- * Custom Payment Gateways for WooCommerce - Input Fields Class
- *
- * @version 1.6.1
- * @since   1.3.0
- * @author  Imaginate Solutions
- * @package cpgw
- */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -16,19 +8,7 @@ use Automattic\WooCommerce\Utilities\OrderUtil;
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
 
 if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
-
-	/**
-	 * Input Fields Class.
-	 */
 	class Alg_WC_Custom_Payment_Gateways_Input_Fields {
-
-		/**
-		 * Constructor.
-		 *
-		 * @version 1.6.1
-		 * @since   1.3.0
-		 * @todo    [dev] add option to pre-fill input fields on checkout with previous customer values (i.e. save it in customer meta)
-		 */
 		public function __construct() {
 			add_action( 'woocommerce_after_checkout_validation', array( $this, 'check_required_input_fields' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'add_input_fields_to_order_meta' ), PHP_INT_MAX, 2 );
@@ -40,16 +20,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
 			}
 		}
 
-		/**
-		 * Process input fields.
-		 *
-		 * @param mixed    $value Value.
-		 * @param WC_Order $order Order Object.
-		 * @param string   $field Field.
-		 * @return mixed
-		 * @version 1.6.1
-		 * @since   1.6.1
-		 */
 		public function woe_process_input_fields( $value, $order, $field ) {
 			$order_id = $order->get_id();
 			if ( $order_id ) {
@@ -70,16 +40,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
 			return $value;
 		}
 
-		/**
-		 * Get input fields output.
-		 *
-		 * @param array $fields Fields Array.
-		 * @param array $templates Templates.
-		 * @return array
-		 * @version 1.4.2
-		 * @since   1.4.0
-		 * @todo    [dev] (optionally) do not output on empty value
-		 */
 		public function get_input_fields_output( $fields, $templates ) {
 			$fields_html = '';
 			foreach ( $fields as $title => $value ) {
@@ -88,19 +48,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
 			return $templates['start'] . $fields_html . $templates['end'];
 		}
 
-		/**
-		 * Add input fields to emails.
-		 *
-		 * @param WC_Order $order Order Object.
-		 * @param bool     $sent_to_admin Is sent to admin.
-		 * @param bool     $plain_text Is plain text.
-		 * @param WC_Email $email Email Object.
-		 * @version 1.4.0
-		 * @since   1.4.0
-		 * @todo    [dev] customizable position (same in `add_input_fields_to_order_details()`)
-		 * @todo    [dev] enable/disable per input field or per payment gateway (same in `add_input_fields_to_order_details()`)
-		 * @todo    [dev] enable/disable per `$email`
-		 */
 		public function add_input_fields_to_emails( $order, $sent_to_admin, $plain_text, $email ) {
 			if ( 'no' === get_option( 'alg_wc_cpg_input_fields_add_to_emails', 'no' ) ) {
 				return;
@@ -131,13 +78,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
 			}
 		}
 
-		/**
-		 * Add input fields to order details.
-		 *
-		 * @param WC_Order $order Order Object.
-		 * @version 1.4.0
-		 * @since   1.4.0
-		 */
 		public function add_input_fields_to_order_details( $order ) {
 			if ( 'no' === get_option( 'alg_wc_cpg_input_fields_add_to_order_details', 'no' ) ) {
 				return;
@@ -160,15 +100,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
 			}
 		}
 
-		/**
-		 * Check required input fields.
-		 *
-		 * @param array $data Data.
-		 * @param array $errors Errors.
-		 * @version 1.3.0
-		 * @since   1.3.0
-		 * @todo    [dev] customizable error message
-		 */
 		public function check_required_input_fields( $data, $errors ) {
 			if ( ! empty( $data['payment_method'] ) ) {
 				if ( isset( $_POST['alg_wc_cpg_input_fields_required'][ $data['payment_method'] ] ) ) {
@@ -188,13 +119,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
 			}
 		}
 
-		/**
-		 * Add input fields meta box.
-		 *
-		 * @version 1.3.0
-		 * @since   1.3.0
-		 * @todo    [dev] customizable context (i.e. `side`, `normal`, `advanced`) and priority (i.e. `default`, `low`, `high`)
-		 */
 		public function add_input_fields_meta_box( $post_type, $post ) {
 			if ( 'woocommerce_page_wc-orders' === $post_type || 'shop_order' === $post_type ) {
 				if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
@@ -225,14 +149,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
 			}
 		}
 
-		/**
-		 * Display input fields meta box.
-		 *
-		 * @param mixed $post_or_order_object Post object.
-		 * @version 1.3.0
-		 * @since   1.3.0
-		 * @todo    [dev] add "Delete data" button
-		 */
 		public function display_input_fields_meta_box( $post_or_order_object ) {
 			$order = ( $post_or_order_object instanceof WP_Post ) ? wc_get_order( $post_or_order_object->ID ) : $post_or_order_object;
 
@@ -249,16 +165,6 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Input_Fields' ) ) :
 			);
 		}
 
-		/**
-		 * Add input fields to order meta.
-		 *
-		 * @param int  $order_id Order ID.
-		 * @param bool $posted Posted.
-		 * @version 1.5.0
-		 * @since   1.3.0
-		 * @todo    [dev] (maybe) optional `sanitize_textarea_field` (e.g. `sanitize_text_field` or no sanitization at all)
-		 * @todo    [dev] (maybe) get `payment_method` from `$order->get_payment_method()` (as a fallback?)
-		 */
 		public function add_input_fields_to_order_meta( $order_id, $posted ) {
 			if ( ! empty( $_POST['payment_method'] ) && isset( $_POST['alg_wc_cpg_input_fields'][ $_POST['payment_method'] ] ) ) {
 				$values = array_map( 'sanitize_textarea_field', $_POST['alg_wc_cpg_input_fields'][ $_POST['payment_method'] ] );
