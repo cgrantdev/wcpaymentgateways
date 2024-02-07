@@ -1,12 +1,4 @@
 <?php
-/**
- * Custom Payment Gateways for WooCommerce - General Section Settings
- *
- * @version 1.5.0
- * @since   1.0.0
- * @author  Imaginate Solutions
- * @package cpgw
- */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -14,34 +6,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Settings_General' ) ) :
 
-	/**
-	 * General Settings Class.
-	 */
 	class Alg_WC_Custom_Payment_Gateways_Settings_General extends Alg_WC_Custom_Payment_Gateways_Settings_Section {
 
 		public $id = '';
 
 		public $desc = '';
-
-		/**
-		 * Constructor.
-		 *
-		 * @version 1.2.1
-		 * @since   1.0.0
-		 */
+		
 		public function __construct() {
 			$this->id   = '';
 			$this->desc = __( 'General', 'custom-payment-gateways-woocommerce' );
 			parent::__construct();
 		}
 
-		/**
-		 * Get settings.
-		 *
-		 * @return array Settings Array.
-		 * @version 1.5.0
-		 * @since   1.0.0
-		 */
 		public function get_settings() {
 			$settings = array(
 				array(
