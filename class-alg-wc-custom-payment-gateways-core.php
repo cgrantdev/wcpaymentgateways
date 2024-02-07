@@ -1,32 +1,11 @@
 <?php
-/**
- * Custom Payment Gateways for WooCommerce - Core Class
- *
- * @version 1.6.0
- * @since   1.0.0
- * @author  Imaginate Solutions
- * @package cpgw
- */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Core' ) ) :
-
-	/**
-	 * Custom Payment Gateway Core Class.
-	 */
 	class Alg_WC_Custom_Payment_Gateways_Core {
-
-		/**
-		 * Constructor.
-		 *
-		 * @version 1.6.0
-		 * @since   1.0.0
-		 * @todo    [dev] add "language" shortcode
-		 * @todo    [dev] (maybe) currency conversion (#6974)
-		 */
 		public function __construct() {
 			if ( 'yes' === get_option( 'alg_wc_custom_payment_gateways_enabled', 'yes' ) ) {
 				// Include custom payment gateways class.
@@ -45,5 +24,4 @@ if ( ! class_exists( 'Alg_WC_Custom_Payment_Gateways_Core' ) ) :
 	}
 
 endif;
-
 return new Alg_WC_Custom_Payment_Gateways_Core();
